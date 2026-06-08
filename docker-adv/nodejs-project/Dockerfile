@@ -12,13 +12,16 @@ COPY . .
 
 # run a bunch of commands while the image is creating 
 RUN npm install
-RUN npm run build 
+# RUN npm run build 
 
 # exposed process port
 EXPOSE 3000
 
-# the process that YOU are starting  
+# Final command that runs while running the container   
 CMD ["node", "index.js"]
 
 
 # NOTE: you can have multiple RUN but one CMD 
+
+
+# anyone can pull it with --> docker pull somyabaran/hello-world-app
