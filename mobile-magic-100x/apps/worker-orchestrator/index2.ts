@@ -1,3 +1,4 @@
+// the backend finds a free AWS machine for the user, and if there aren't enough free machines left, it tells AWS to create more
 import express from "express";
 import { AutoScalingClient, SetDesiredCapacityCommand, DescribeAutoScalingInstancesCommand, TerminateInstanceInAutoScalingGroupCommand } from "@aws-sdk/client-auto-scaling";
 import { EC2Client, DescribeInstancesCommand } from "@aws-sdk/client-ec2"
@@ -5,12 +6,15 @@ import { EC2Client, DescribeInstancesCommand } from "@aws-sdk/client-ec2"
 
 const app = express();
 
+// client talk to auto scaling
 const client = new AutoScalingClient({
     region: "ap-south-1", credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY!,
         secretAccessKey: process.env.AWS_ACCESS_SECRET!
     }
 });
+
+// ec2Client talks to instances
 const ec2Client = new EC2Client({
     region: "ap-south-1", credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY!,
@@ -26,8 +30,8 @@ type Machine = {
 const ALL_MACHINES: Machine[] = [];
 
 async function refreshInstances() {
-    const command = new DescribeAutoScalingInstancesCommand()
-    const data = await client.send(command);
+    const command = new DescribeAutoScalingInstancesCommand(); // this creates a request
+    const data = await client.send(command); // request send -> aws replies and gets stored in data
 
     const ec2InstanceCommand = new DescribeInstancesCommand({
         InstanceIds: data.AutoScalingInstances?.map(x => x.InstanceId!)
