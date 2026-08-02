@@ -8,7 +8,12 @@ const logger = winston.createLogger({
   //   winston.format.prettyPrint()
   // ),
   // format: winston.format.simple(),
-  format: winston.format.json(),
+  // format: winston.format.json(),
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json(),
+    winston.format.prettyPrint(),
+  ),
   transports: [
     new winston.transports.File({ filename: "error.log", level: "error" }),
     new winston.transports.File({ filename: "combined.log" }),

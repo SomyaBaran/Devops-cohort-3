@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc -b && node index.js"
+    "dev": "tsc -b && node index.js",
+    "start": "tsc -b && NODE_ENV=production node index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "tsx": "^4.23.1",
     "typescript": "^7.0.2"
   }
 }
