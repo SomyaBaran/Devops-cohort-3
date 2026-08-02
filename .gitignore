@@ -1,2 +1,8 @@
 node_modules/
 node_modules/
+
+new-relic-winston/node_modules/
+new-relic-winston/*.log
+new-relic-winston/index.js
+new-relic-winston/index.d.ts
+new-relic-winston/tsconfig.tsbuildinfo
